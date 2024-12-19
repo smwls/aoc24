@@ -8,6 +8,8 @@ import Day2 (day2)
 import Day3 (day3)
 import Day4 (day4)
 import Day5 (day5)
+import Day6 (day6)
+import Day7 (day7)
 import AocTypes
 main :: IO ()
 main = do 
@@ -53,6 +55,8 @@ getAocFunction (Day day) = case day of
     3 -> day3
     4 -> day4
     5 -> day5
+    6 -> day6
+    7 -> day7
     _ -> \_ _ -> Just "not yet"
 runAoc :: Options -> IO String
 runAoc (Options day ab mode) = do
