@@ -27,9 +27,8 @@ isEquationSolvable1 :: Equation -> Bool
 isEquationSolvable1 equation = case equation of
     (Equation _ []) -> False;
     (Equation target [num]) -> target == num;
-    (Equation target (num1:nums)) ->
-        isEquationSolvable1 (Equation (target - num1) nums)
-            || target `rem` num1 == 0 && isEquationSolvable1 (Equation (target `div` num1) nums)
+    (Equation target (num1:(num2:ns))) ->
+        isEquationSolvable1 (Equation target ((num1 + num2):ns)) || isEquationSolvable1 (Equation target ((num1 * num2):ns))
 
 isEquationSolvable2 :: Equation -> Bool
 isEquationSolvable2 equation = case equation of
