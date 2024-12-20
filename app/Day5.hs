@@ -3,16 +3,10 @@ import AocTypes
 import Data.Map (Map, empty, findWithDefault, insert)
 import Data.List (sortBy)
 
-day5 :: RunFunction
-day5 ab input = do
-    parsed <- parseInput input
-    return $ case ab of
-        A -> day5a parsed
-        B -> day5b parsed
+day5 :: RunFunction (PageRules, Updates)
+day5 = RunFunction parseInput day5a day5b
 
-day5a :: (PageRules, Updates) -> String
 day5a input = show $ sum $ median <$> filterInvalidUpdates input
-day5b :: (PageRules, Updates) -> String
 day5b input =
     let (prs, us) = input
     in show $ sum $ median . makeUpdateValid prs <$> filter (not . isValidUpdate prs) us

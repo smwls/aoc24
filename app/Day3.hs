@@ -1,12 +1,9 @@
 module Day3 where
 import AocTypes
 import Text.Read (readMaybe)
-day3 :: RunFunction
-day3 ab input = do
-    parsed <- parseInput input
-    return $ case ab of
-        A -> day3a parsed
-        B -> day3b parsed
+
+day3 :: RunFunction Commands
+day3 = RunFunction parseInput day3a day3b
 
 day3a :: SolutionInstance Commands
 day3a input = show $ sum $ uncurry (*) <$> parseMuls input

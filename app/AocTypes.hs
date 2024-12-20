@@ -6,5 +6,6 @@ data Mode = Test | Run
 data Options = Options Day AB Mode
 type InputData = String
 type Result = String
-type RunFunction = AB -> InputData -> Maybe Result
+type Parser a = (String -> Maybe a)
+data RunFunction a = RunFunction (Parser a) (SolutionInstance a) (SolutionInstance a)
 type SolutionInstance a = (a -> String)

@@ -2,20 +2,17 @@ module Day7 where
 
 import AocTypes
 
-day7 :: RunFunction
-day7 ab input = do
-    parsed <- parseInput input
-    return $ case ab of
-        A -> day7a parsed
-        B -> day7b parsed
-
-day7a input = show $ sum $ (\(Equation test _) -> test) <$> filter isEquationSolvable1 input
-day7b input = show $ sum $ (\(Equation test _) -> test) <$> filter isEquationSolvable2 input
+day7 :: RunFunction [Equation]
+day7 = RunFunction parseInput day7a day7b
 
 parseInput :: String -> Maybe [Equation]
 parseInput s = Just $ parseEquation <$> lines s
 
 data Equation = Equation Int [Int] deriving (Eq, Show)
+day7a input = show $ sum $ (\(Equation test _) -> test) <$> filter isEquationSolvable1 input
+day7b input = show $ sum $ (\(Equation test _) -> test) <$> filter isEquationSolvable2 input
+
+
 
 parseEquation :: String -> Equation
 parseEquation s =

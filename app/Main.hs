@@ -48,19 +48,32 @@ parseOptions (d:a:os) = do
     Just $ Options day ab mode
 parseOptions _ = Nothing
 
-getAocFunction :: Day -> RunFunction
-getAocFunction (Day day) = case day of 
-    1 -> day1
-    2 -> day2
-    3 -> day3
-    4 -> day4
-    5 -> day5
-    6 -> day6
-    7 -> day7
-    _ -> \_ _ -> Just "not yet"
+getAndRunFunction :: AB -> Day -> String -> Maybe String
+getAndRunFunction ab (Day day) input = case day of 
+            1 -> f day1
+            2 -> f day2
+            3 -> f day3
+            4 -> f day4
+            5 -> f day5
+            6 -> f day6
+            7 -> f day7
+            _ -> Nothing
+        where 
+            f :: RunFunction a -> Maybe String
+            f = runRunFunction ab input
+
+runRunFunction :: AB -> String -> RunFunction a -> Maybe String
+runRunFunction ab s (RunFunction parser dayA dayB) = do
+    parsed <- parser s
+    return $ case ab of
+        A -> dayA parsed
+        B -> dayB parsed
 runAoc :: Options -> IO String
 runAoc (Options day ab mode) = do
     inputData <- readTextFile day mode
     return $ case inputData of
-        Just input -> case getAocFunction day ab input of (Just result) -> result; Nothing -> "failed"
+        Just input -> 
+            case getAndRunFunction ab day input of
+                (Just result) -> result 
+                Nothing -> "failed"
         Nothing -> "Input file not present"

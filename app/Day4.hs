@@ -1,12 +1,9 @@
 module Day4 where
 import AocTypes
 import Data.Maybe (listToMaybe)
-day4 :: RunFunction
-day4 ab input = do
-    parsed <- parseInput input
-    return $ case ab of
-        A -> day4a parsed
-        B -> day4b parsed
+
+day4 :: RunFunction XmasSearch
+day4 = RunFunction parseInput day4a day4b
 
 day4a input = show $ xmasCount input
 day4b input = show $ xmasCount2 input

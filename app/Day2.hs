@@ -2,15 +2,9 @@ module Day2 where
 import AocTypes
 import Text.Read (readMaybe)
 
-day2 :: RunFunction
-day2 ab input = do
-    parsed <- parseInput input
-    return $ case ab of
-        A -> day2a parsed
-        B -> day2b parsed
-day2a :: SolutionInstance ReportList
+day2 :: RunFunction ReportList
+day2 = RunFunction parseInput day2a day2b
 day2a input = show $ foldr ((\v a -> if satisfiesRequirements v then a + 1 else a) . diffs) 0 input
-day2b :: SolutionInstance ReportList
 day2b input = show $ foldr (\v a -> if satisfiesRequirements (diffs v) || any ((satisfiesRequirements . diffs) . removeAt v) [0..length v - 1] then a + 1 else a) 0 input
     where
         removeAt :: [Int] -> Int -> [Int]

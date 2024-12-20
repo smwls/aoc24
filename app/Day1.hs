@@ -6,12 +6,8 @@ import Data.Map (Map, empty, findWithDefault)
 import Data.Map.Strict (insertWith)
 
 data ListPair = ListPair [Int] [Int]
-day1 :: RunFunction
-day1 ab input = do
-    parsed <- parseInput input
-    return $ case ab of
-        A -> day1a parsed
-        B -> day1b parsed
+day1 :: RunFunction ListPair
+day1 = RunFunction parseInput day1a day1b
 
 day1a :: SolutionInstance ListPair
 day1a (ListPair a b) = show $ sum $ dists <$> zip (sort a) (sort b)

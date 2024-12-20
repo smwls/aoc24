@@ -5,17 +5,13 @@ import Data.Maybe (isJust, fromMaybe, isJust)
 import Data.List (find, transpose, sort)
 import Data.Set (empty, union, fromList, Set, singleton, size)
 import qualified Data.Set as Set
-day6 :: RunFunction
-day6 ab input = do
-    parsed <- parseInput input
-    return $ case ab of
-        A -> day6a parsed
-        B -> day6b parsed
+
+day6 :: RunFunction (Grid, Point)
+day6 = RunFunction parseInput day6a day6b
 
 day6a (input, pt) = show $ size $ fst $ snd $ iterateUntilLeft (input, pt)
-day6b (input, pt) = show $ countAllLoopingObstacles (input, pt)--do
-    -- newGrid <- gridWithObstacle input (4, 5)
-    -- iterateUntilLoopOrLeft (newGrid, pt)
+day6b (input, pt) = show $ countAllLoopingObstacles (input, pt)
+
 parseInput :: String -> Maybe (Grid, Point)
 parseInput s =
     let
@@ -118,7 +114,7 @@ gridWithObstacle (Grid b rows cols) (r, c) = do
         let newCols = (\(Col c' cs) -> if c' /= c then Col c' cs else if r `elem` cs then Col c cs else Col c $ sort (r:cs)) <$> cols
         if newRows == rows || newCols == cols then Nothing else return $ Grid b newRows newCols
 
--- countAllLoopingObstacles :: (Grid, Point) -> Int
+countAllLoopingObstacles :: (Grid, Point) -> Int
 countAllLoopingObstacles (g@(Grid b _ _), p@(Point i j _)) =
     let pairs = filter (\(x, y) -> x /= i || y /= j) $ [(x, y) | x <- [0..b], y <- [0..b]]
         grids = fromMaybe [] $ sequence $ filter isJust $ gridWithObstacle g <$> pairs
