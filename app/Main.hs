@@ -10,6 +10,7 @@ import Day4 (day4)
 import Day5 (day5)
 import Day6 (day6)
 import Day7 (day7)
+import Day8 (day8)
 import AocTypes
 main :: IO ()
 main = do 
@@ -57,6 +58,7 @@ getAndRunFunction ab (Day day) input = case day of
             5 -> f day5
             6 -> f day6
             7 -> f day7
+            8 -> f day8
             _ -> Nothing
         where 
             f :: RunFunction a -> Maybe String
