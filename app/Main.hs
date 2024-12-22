@@ -12,7 +12,14 @@ import Day6 (day6)
 import Day7 (day7)
 import Day8 (day8)
 import Day9 (day9)
+import Day10 (day10)
 import AocTypes
+    ( RunFunction(..),
+      InputData,
+      Options(..),
+      Mode(..),
+      AB(..),
+      Day(..) )
 main :: IO ()
 main = do 
     args <- getArgs
@@ -61,6 +68,7 @@ getAndRunFunction ab (Day day) input = case day of
             7 -> f day7
             8 -> f day8
             9 -> f day9
+            10 -> f day10
             _ -> Nothing
         where 
             f :: RunFunction a -> Maybe String
